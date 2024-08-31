@@ -7,16 +7,22 @@ require_relative '../lib/piece'
 
 RSpec.describe Chess do
   describe 'Chess Game Initialization' do
-    xit 'initializes a new game' do
+    it 'initializes a new game' do
       game = Chess.new
       expect(game).to be_a(Chess)
     end
 
-    xit 'creates a board with pieces in the correct initial positions' do
+    it 'creates a board with pieces in the correct initial positions' do
       board = Board.new
       expect(board.setup).to be_truthy
       expect(board.grid[0][0]).to be_a(Piece)
       expect(board.grid[7][7]).to be_a(Piece)
+    end
+
+    it 'setup does not place pieces in wrong positions' do
+      board = Board.new
+      expect(board.grid[3][2]).to_not be_a(Piece)
+      expect(board.grid[5][0]).to_not be_a(Piece)
     end
   end
 
