@@ -1,7 +1,7 @@
 class Board
-  def initialize
+  def initialize(empty = false)
     @grid = Array.new(8){Array.new(8){nil}}
-    setup
+    setup unless empty
   end
 
   def setup
