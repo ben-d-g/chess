@@ -24,6 +24,26 @@ RSpec.describe Chess do
       expect(board.grid[3][2]).to_not be_a(Piece)
       expect(board.grid[5][0]).to_not be_a(Piece)
     end
+
+    it 'setup places correct pieces in correct places' do
+      board = Board.new
+      expect(board.grid[0][0].type).to eq("rook")
+      expect(board.grid[6][5].type).to eq("pawn")
+      expect(board.grid[7][3].type).to eq("queen")
+      expect(board.grid[0][3].type).to eq("queen")
+      expect(board.grid[7][4].type).to eq("king")
+      expect(board.grid[0][4].type).to eq("king")
+    end
+
+    it 'setup places correct colours in correct places' do
+      board = Board.new
+      expect(board.grid[0][0].colour).to eq("white")
+      expect(board.grid[6][5].colour).to eq("black")
+      expect(board.grid[7][3].colour).to eq("black")
+      expect(board.grid[0][3].colour).to eq("white")
+      expect(board.grid[7][4].colour).to eq("black")
+      expect(board.grid[0][4].colour).to eq("white")
+    end
   end
 
   describe 'Chess Game Play' do
