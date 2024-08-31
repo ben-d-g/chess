@@ -39,6 +39,14 @@ RSpec.describe 'Piece Movement' do
       expect(pawn.valid_move?([2, 0], [3, 1], board)).to be_truthy # a3 to b4
     end
 
+    it 'does not allow pawns to capture straight forward' do
+      pawn = Pawn.new("white")
+      opponent_piece = Pawn.new("black")
+      board.place_piece(pawn, [2, 0]) # Place white pawn on a3
+      board.place_piece(opponent_piece, [3, 0]) # Place black pawn on a4
+      expect(pawn.valid_move?([2, 0], [3, 0], board)).to be_falsey # a3 to a4 (should not capture straight forward)
+    end
+
     it 'does not allow pawns to capture their own color pieces' do
       pawn = Pawn.new("white")
       ally_pawn = Pawn.new("white")

@@ -7,6 +7,10 @@ class Piece
       new_coords = [coords[0] + move[0], coords[1] + move[1]]
       if new_coords.all? { |coord| coord.between?(0, 7) }
         move_list.push(new_coords) if board.grid[new_coords[0]][new_coords[1]].nil? or board.grid[new_coords[0]][new_coords[1]].colour != @colour
+        #dealing with pawn capturing in most sloppy way possible:
+        if board.grid[coords[0]][coords[1]].is_a?(Pawn) and (new_coords[1] == coords[1]) and not board.grid[new_coords[0]][new_coords[1]].nil?
+          move_list.pop
+        end
       end
     end
     
