@@ -205,7 +205,7 @@ RSpec.describe 'Piece Movement' do
   end
 
   describe 'King movement' do
-    xit 'allows kings to move one square in any direction' do
+    it 'allows kings to move one square in any direction' do
       king = King.new("white")
       board.place_piece(king, [0, 4]) # Place white king on e1
       expect(king.valid_move?([0, 4], [1, 4], board)).to be_truthy # e1 to e2
@@ -213,21 +213,13 @@ RSpec.describe 'Piece Movement' do
       expect(king.valid_move?([0, 4], [1, 5], board)).to be_truthy # e1 to f2
     end
 
-    xit 'does not allow kings to move more than one square' do
+    it 'does not allow kings to move more than one square' do
       king = King.new("white")
       board.place_piece(king, [0, 4]) # Place white king on e1
       expect(king.valid_move?([0, 4], [2, 4], board)).to be_falsey # e1 to e3 (invalid)
     end
 
-    xit 'does not allow kings to jump over pieces' do
-      king = King.new("white")
-      blocking_piece = Pawn.new("black")
-      board.place_piece(king, [0, 4]) # Place white king on e1
-      board.place_piece(blocking_piece, [1, 4]) # Place black pawn on e2
-      expect(king.valid_move?([0, 4], [1, 4], board)).to be_falsey # e1 to e2 (blocked by pawn)
-    end
-
-    xit 'allows kings to capture opponent pieces' do
+    it 'allows kings to capture opponent pieces' do
       king = King.new("white")
       opponent_piece = Pawn.new("black")
       board.place_piece(king, [0, 4]) # Place white king on e1
@@ -235,7 +227,7 @@ RSpec.describe 'Piece Movement' do
       expect(king.valid_move?([0, 4], [1, 4], board)).to be_truthy # e1 to e2 (captures black pawn)
     end
 
-    xit 'does not allow kings to capture their own color pieces' do
+    it 'does not allow kings to capture their own color pieces' do
       king = King.new("white")
       ally_piece = Pawn.new("white")
       board.place_piece(king, [0, 4]) # Place white king on e1
