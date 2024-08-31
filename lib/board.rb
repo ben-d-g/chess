@@ -31,5 +31,9 @@ class Board
     end
   end
 
+  def place_piece(piece, coord)
+    @grid[coord[0]][coord[1]] = piece
+  end
+
   attr_accessor :grid
 end

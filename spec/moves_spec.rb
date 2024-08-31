@@ -13,25 +13,26 @@ RSpec.describe 'Piece Movement' do
   let(:board) { Board.new }
 
   describe 'Pawn movement' do
-    xit 'allows pawns to move forward by one square' do
+    it 'allows pawns to move forward by one square' do
       pawn = Pawn.new("white")
       board.place_piece(pawn, [1, 0]) # Place white pawn on a2 (index [1, 0])
+      p(pawn.valid_moves([1,0], board))
       expect(pawn.valid_move?([1, 0], [2, 0], board)).to be_truthy # a2 to a3
     end
 
-    xit 'allows pawns to move forward by two squares on their first move' do
+    it 'allows pawns to move forward by two squares on their first move' do
       pawn = Pawn.new("white")
       board.place_piece(pawn, [1, 0]) # Place white pawn on a2
       expect(pawn.valid_move?([1, 0], [3, 0], board)).to be_truthy # a2 to a4
     end
 
-    xit 'does not allow pawns to move backward' do
+    it 'does not allow pawns to move backward' do
       pawn = Pawn.new("white")
       board.place_piece(pawn, [2, 0]) # Place white pawn on a3
       expect(pawn.valid_move?([2, 0], [1, 0], board)).to be_falsey # a3 to a2 (invalid)
     end
 
-    xit 'allows pawns to capture diagonally' do
+    it 'allows pawns to capture diagonally' do
       pawn = Pawn.new("white")
       enemy_pawn = Pawn.new("black")
       board.place_piece(pawn, [2, 0]) # Place white pawn on a3
