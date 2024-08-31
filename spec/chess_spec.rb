@@ -3,7 +3,13 @@
 require 'rspec'
 require_relative '../lib/chess'
 require_relative '../lib/board'
-require_relative '../lib/piece'
+require_relative '../lib/pieces/piece'
+require_relative '../lib/pieces/pawn'
+require_relative '../lib/pieces/rook'
+require_relative '../lib/pieces/knight'
+require_relative '../lib/pieces/bishop'
+require_relative '../lib/pieces/queen'
+require_relative '../lib/pieces/king'
 
 RSpec.describe Chess do
   describe 'Chess Game Initialization' do
@@ -27,12 +33,12 @@ RSpec.describe Chess do
 
     it 'setup places correct pieces in correct places' do
       board = Board.new
-      expect(board.grid[0][0].type).to eq("rook")
-      expect(board.grid[6][5].type).to eq("pawn")
-      expect(board.grid[7][3].type).to eq("queen")
-      expect(board.grid[0][3].type).to eq("queen")
-      expect(board.grid[7][4].type).to eq("king")
-      expect(board.grid[0][4].type).to eq("king")
+      expect(board.grid[0][0]).to be_a(Rook)
+      expect(board.grid[6][5]).to be_a(Pawn)
+      expect(board.grid[7][3]).to be_a(Queen)
+      expect(board.grid[0][3]).to be_a(Queen)
+      expect(board.grid[7][4]).to be_a(King)
+      expect(board.grid[0][4]).to be_a(King)
     end
 
     it 'setup places correct colours in correct places' do

@@ -1,7 +1,7 @@
 class Piece
-  def initialize(type, colour)
-    @type = type
+  def initialize(colour)
     @colour = colour
+    @moves = {once: [], repeats: []}
   end
 
   attr_accessor :type, :colour
