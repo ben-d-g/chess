@@ -126,20 +126,20 @@ RSpec.describe 'Piece Movement' do
   end
 
   describe 'Bishop movement' do
-    xit 'allows bishops to move diagonally' do
+    it 'allows bishops to move diagonally' do
       bishop = Bishop.new("white")
       board.place_piece(bishop, [0, 2]) # Place white bishop on c1
       expect(bishop.valid_move?([0, 2], [2, 4], board)).to be_truthy # c1 to e3
     end
 
-    xit 'does not allow bishops to move horizontally or vertically' do
+    it 'does not allow bishops to move horizontally or vertically' do
       bishop = Bishop.new("white")
       board.place_piece(bishop, [0, 2]) # Place white bishop on c1
       expect(bishop.valid_move?([0, 2], [0, 3], board)).to be_falsey # c1 to d1 (invalid)
       expect(bishop.valid_move?([0, 2], [1, 2], board)).to be_falsey # c1 to c2 (invalid)
     end
 
-    xit 'does not allow bishops to jump over pieces' do
+    it 'does not allow bishops to jump over pieces' do
       bishop = Bishop.new("white")
       blocking_piece = Pawn.new("black")
       board.place_piece(bishop, [0, 2]) # Place white bishop on c1
@@ -147,7 +147,7 @@ RSpec.describe 'Piece Movement' do
       expect(bishop.valid_move?([0, 2], [2, 4], board)).to be_falsey # c1 to e3 (blocked by pawn)
     end
 
-    xit 'allows bishops to capture opponent pieces' do
+    it 'allows bishops to capture opponent pieces' do
       bishop = Bishop.new("white")
       opponent_piece = Pawn.new("black")
       board.place_piece(bishop, [0, 2]) # Place white bishop on c1
@@ -155,7 +155,7 @@ RSpec.describe 'Piece Movement' do
       expect(bishop.valid_move?([0, 2], [2, 4], board)).to be_truthy # c1 to e3 (captures black pawn)
     end
 
-    xit 'does not allow bishops to capture their own color pieces' do
+    it 'does not allow bishops to capture their own color pieces' do
       bishop = Bishop.new("white")
       ally_piece = Pawn.new("white")
       board.place_piece(bishop, [0, 2]) # Place white bishop on c1
