@@ -5,8 +5,8 @@ class Piece
     # Single-step moves
     @moves[:once].each do |move|
       new_coords = [coords[0] + move[0], coords[1] + move[1]]
-      if new_coords.all? { |c| c.between?(0, 7) }
-        move_list.push(new_coords) if board.grid[new_coords[0]][new_coords[1]].nil?
+      if new_coords.all? { |coord| coord.between?(0, 7) }
+        move_list.push(new_coords) if board.grid[new_coords[0]][new_coords[1]].nil? or board.grid[new_coords[0]][new_coords[1]].colour != @colour
       end
     end
     

@@ -93,22 +93,14 @@ RSpec.describe 'Piece Movement' do
   end
 
   describe 'Knight movement' do
-    xit 'allows knights to move in an L shape' do
+    it 'allows knights to move in an L shape' do
       knight = Knight.new("white")
       board.place_piece(knight, [0, 1]) # Place white knight on b1
       expect(knight.valid_move?([0, 1], [2, 2], board)).to be_truthy # b1 to c3
       expect(knight.valid_move?([0, 1], [1, 3], board)).to be_truthy # b1 to d2
     end
 
-    xit 'does not allow knights to jump over pieces' do
-      knight = Knight.new("white")
-      blocking_piece = Pawn.new("black")
-      board.place_piece(knight, [0, 1]) # Place white knight on b1
-      board.place_piece(blocking_piece, [1, 3]) # Place black pawn on c3
-      expect(knight.valid_move?([0, 1], [2, 2], board)).to be_truthy # b1 to c3 (knight should jump over the piece)
-    end
-
-    xit 'allows knights to capture opponent pieces' do
+    it 'allows knights to capture opponent pieces' do
       knight = Knight.new("white")
       opponent_piece = Pawn.new("black")
       board.place_piece(knight, [0, 1]) # Place white knight on b1
@@ -116,7 +108,7 @@ RSpec.describe 'Piece Movement' do
       expect(knight.valid_move?([0, 1], [2, 2], board)).to be_truthy # b1 to c3 (captures black pawn)
     end
 
-    xit 'does not allow knights to capture their own color pieces' do
+    it 'does not allow knights to capture their own color pieces' do
       knight = Knight.new("white")
       ally_piece = Pawn.new("white")
       board.place_piece(knight, [0, 1]) # Place white knight on b1
