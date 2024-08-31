@@ -165,7 +165,7 @@ RSpec.describe 'Piece Movement' do
   end
 
   describe 'Queen movement' do
-    xit 'allows queens to move vertically, horizontally, or diagonally' do
+    it 'allows queens to move vertically, horizontally, or diagonally' do
       queen = Queen.new("white")
       board.place_piece(queen, [0, 3]) # Place white queen on d1
       expect(queen.valid_move?([0, 3], [3, 3], board)).to be_truthy # d1 to d4 (vertical)
@@ -173,13 +173,13 @@ RSpec.describe 'Piece Movement' do
       expect(queen.valid_move?([0, 3], [2, 5], board)).to be_truthy # d1 to f3 (diagonal)
     end
 
-    xit 'does not allow queens to move in an invalid pattern' do
+    it 'does not allow queens to move in an invalid pattern' do
       queen = Queen.new("white")
       board.place_piece(queen, [0, 3]) # Place white queen on d1
       expect(queen.valid_move?([0, 3], [1, 5], board)).to be_falsey # d1 to f2 (invalid)
     end
 
-    xit 'does not allow queens to jump over pieces' do
+    it 'does not allow queens to jump over pieces' do
       queen = Queen.new("white")
       blocking_piece = Pawn.new("black")
       board.place_piece(queen, [0, 3]) # Place white queen on d1
@@ -187,7 +187,7 @@ RSpec.describe 'Piece Movement' do
       expect(queen.valid_move?([0, 3], [2, 3], board)).to be_falsey # d1 to d3 (blocked by pawn)
     end
 
-    xit 'allows queens to capture opponent pieces' do
+    it 'allows queens to capture opponent pieces' do
       queen = Queen.new("white")
       opponent_piece = Pawn.new("black")
       board.place_piece(queen, [0, 3]) # Place white queen on d1
@@ -195,7 +195,7 @@ RSpec.describe 'Piece Movement' do
       expect(queen.valid_move?([0, 3], [2, 5], board)).to be_truthy # d1 to f3 (captures black pawn)
     end
 
-    xit 'does not allow queens to capture their own color pieces' do
+    it 'does not allow queens to capture their own color pieces' do
       queen = Queen.new("white")
       ally_piece = Pawn.new("white")
       board.place_piece(queen, [0, 3]) # Place white queen on d1
