@@ -56,14 +56,18 @@ RSpec.describe Chess do
     let(:game) { Chess.new }
     let(:board) { game.board }
 
-    xit 'allows players to make valid moves' do
-      move = game.make_move('e2', 'e4')
-      expect(move).to be_truthy
-      expect(board.grid[4][4]).to be_a(Piece)  # assuming 'e4' is translated to [4, 4]
-      expect(board.grid[6][4]).to be_nil
+    it 'translates algebraic notation' do
+      expect(board.at(game.algebraic_translator("a1"))).to be_a(Rook)
     end
 
-    xit 'does not allow invalid moves' do
+    it 'allows players to make valid moves' do
+      move = game.make_move('e2', 'e4')
+      expect(move).to be_truthy
+      expect(board.grid[3][4]).to be_a(Piece)  # assuming 'e4' is translated to [4, 4]
+      expect(board.grid[1][4]).to be_nil
+    end
+
+    it 'does not allow invalid moves' do
       move = game.make_move('e2', 'e5')
       expect(move).to be_falsey
     end

@@ -4,6 +4,10 @@ class Board
     setup unless empty
   end
 
+  def at(coords)
+    return @grid[coords[0]][coords[1]]
+  end
+
   def setup
     #add pieces individually
     @grid[0][0] = Rook.new("white")
