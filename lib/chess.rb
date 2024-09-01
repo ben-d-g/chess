@@ -27,6 +27,21 @@ class Chess
     return false
   end
 
+  def makes_check?(start_coords, end_coords)
+    start_piece = @board.at(start_coords)
+    end_piece = @board.at(end_coords)
+
+    @board.grid[end_coords[0]][end_coords[1]] = start_piece
+    @board.grid[start_coords[0]][start_coords[1]] = nil
+
+    return_value = check?(@board.grid[end_coords[0]][end_coords[1]].colour)
+
+    @board.grid[end_coords[0]][end_coords[1]] = end_piece
+    @board.grid[start_coords[0]][start_coords[1]] = start_piece
+
+    return return_value
+  end
+
   def print_board
     @board.grid.reverse.each do |row|
       row_string = ""
@@ -52,7 +67,7 @@ class Chess
     start_coords = algebraic_translator(start_square)
     end_coords = algebraic_translator(end_square)
 
-    if @board.grid[start_coords[0]][start_coords[1]].valid_move?(start_coords, end_coords, @board)
+    if @board.grid[start_coords[0]][start_coords[1]].valid_move?(start_coords, end_coords, @board) and not(makes_check?(start_coords, end_coords))
       @board.grid[end_coords[0]][end_coords[1]] = @board.at(start_coords)
       p(end_coords)
       @board.grid[start_coords[0]][start_coords[1]] = nil

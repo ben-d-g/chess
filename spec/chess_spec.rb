@@ -61,7 +61,9 @@ RSpec.describe Chess do
     end
 
     it 'allows players to make valid moves' do
+      game.print_board
       move = game.make_move('e2', 'e4')
+      game.print_board
       expect(move).to be_truthy
       expect(board.grid[3][4]).to be_a(Piece)  # assuming 'e4' is translated to [4, 4]
       expect(board.grid[1][4]).to be_nil
