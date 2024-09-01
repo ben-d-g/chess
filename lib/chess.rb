@@ -1,9 +1,32 @@
 class Chess
   def initialize
     @board = Board.new
+    @turns = 0
+
+    play
+  end
+
+  def play
+    print_board
+    make_move("e2","e4")
+    print_board
   end
 
   attr_accessor :board
+
+  def print_board
+    @board.grid.reverse.each do |row|
+      row_string = ""
+      row.each do |square|
+        if square.nil?
+          row_string += "."
+        else
+          row_string += square.get_piece
+        end
+      end
+      puts(row_string)
+    end
+  end
 
   def algebraic_translator(input_string)
     row = input_string[1].to_i - 1

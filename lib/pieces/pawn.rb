@@ -7,6 +7,14 @@ class Pawn < Piece
     @moved = false
   end
 
+  def get_piece
+    if @colour == "white"
+      return "♙"
+    else
+      return "♟︎"
+    end
+  end
+
   attr_accessor :colour
 
   def update_moves

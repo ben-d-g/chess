@@ -6,4 +6,12 @@ class Knight < Piece
     @moves = {once: [[1,2], [2,1], [-1,2], [2,-1], [1,-2], [-2,1], [-1,-2],[-2,-1]], repeats: []}
     @moved = false
   end
+
+  def get_piece
+    if @colour == "white"
+      return "♘" 
+    else
+      return "♞"
+    end
+  end
 end

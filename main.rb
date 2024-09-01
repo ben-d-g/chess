@@ -8,6 +8,4 @@ require_relative("lib/pieces/piece")
 require_relative("lib/pieces/queen")
 require_relative("lib/pieces/rook")
 
-board = Board.new()
-p(board.grid[1][0].moves)
-p(board.grid[1][0].colour)
+game = Chess.new
