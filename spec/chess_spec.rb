@@ -101,32 +101,4 @@ RSpec.describe Chess do
       expect(empty_game.stalemate?(:black)).to be_truthy
     end
   end
-
-  describe 'Special Moves' do
-    let(:game) { Chess.new }
-
-    xit 'allows castling' do
-      # Set up a board where castling is legal
-      board = game.board
-      board.clear_path('e1', 'g1') # Simulate the path is clear for castling
-      move = game.make_move('e1', 'g1') # White king-side castling
-      expect(move).to be_truthy
-    end
-
-    xit 'allows en passant' do
-      # Set up a scenario where en passant is possible
-      game.make_move('e2', 'e4')
-      game.make_move('d7', 'd5')
-      move = game.make_move('e4', 'd5') # En passant move
-      expect(move).to be_truthy
-    end
-
-    xit 'allows pawn promotion' do
-      # Set up a scenario where a pawn can be promoted
-      board = game.board
-      board.place_piece(Pawn.new(:white), [6, 0]) # White pawn on a7
-      game.make_move('a7', 'a8=Q') # Promote to Queen
-      expect(board.grid[7][0]).to be_a(Queen)
-    end
-  end
 end
