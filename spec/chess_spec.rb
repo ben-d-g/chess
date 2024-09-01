@@ -61,9 +61,7 @@ RSpec.describe Chess do
     end
 
     it 'allows players to make valid moves' do
-      game.print_board
       move = game.make_move('e2', 'e4')
-      game.print_board
       expect(move).to be_truthy
       expect(board.grid[3][4]).to be_a(Piece)  # assuming 'e4' is translated to [4, 4]
       expect(board.grid[1][4]).to be_nil
@@ -83,12 +81,14 @@ RSpec.describe Chess do
       expect(empty_game.check?("black")).to be_truthy
     end
 
-    xit 'detects checkmate conditions' do
+    it 'detects checkmate conditions' do
+      empty_game = Chess.new(true)
+      empty_board = empty_game.board
       # Set up a board where checkmate is unavoidable
-      board.place_piece(King.new(:black), [0, 4]) # Black king on e1
-      board.place_piece(Rook.new(:white), [0, 7]) # White rook on h1
-      board.place_piece(Queen.new(:white), [1, 4]) # White queen on e2
-      expect(game.checkmate?(:black)).to be_truthy
+      empty_board.place_piece(King.new("black"), [0, 4]) # Black king on e1
+      empty_board.place_piece(Rook.new("white"), [0, 7]) # White rook on h1
+      empty_board.place_piece(Queen.new("white"), [1, 7]) # White queen on e2
+      expect(empty_game.checkmate?("black")).to be_truthy
     end
 
     xit 'detects stalemate conditions' do

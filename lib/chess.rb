@@ -42,6 +42,30 @@ class Chess
     return return_value
   end
 
+  def any_moves?(colour)
+    @board.grid.each_with_index do |row_list, row|
+      row_list.each_with_index do |square, col|
+        if not(@board.grid[row][col].nil?) and (@board.grid[row][col].colour() == colour) and (valid_moves(row,col) != [])
+          p(@board.grid[row][col].valid_moves([row,col], @board))
+          return true
+        end
+      end
+    end
+    return false
+  end
+
+  def checkmate?(colour)
+    if check?(colour) and not any_moves?(colour)
+      return true
+    else
+      return false
+    end
+  end
+
+  def valid_moves(row, col)
+    return @board.grid[row][col].valid_moves([row,col], @board).select{|move| not(makes_check?([row,col], move))}
+  end
+
   def print_board
     @board.grid.reverse.each do |row|
       row_string = ""
