@@ -12,16 +12,16 @@ class Chess
       print_board
       play_turn
 
-      ["black", "white"].each do |colour|
-        if checkmate?(colour)
-          puts("#{colour} has been checkmated!")
-          return true
-        elsif stalemate?(colour)
-          puts("Stalemate!")
-          return true
-        elsif check?(colour)
-          puts("#{colour} is in check")
-        end
+      colour = (@turns % 2 == 1) ? "white" : "black"
+
+      if checkmate?(colour)
+        puts("#{colour} has been checkmated!")
+        return true
+      elsif stalemate?(colour)
+        puts("Stalemate!")
+        return true
+      elsif check?(colour)
+        puts("#{colour} is in check")
       end
     end
   end
@@ -32,9 +32,11 @@ class Chess
     until move_input
       move_input = get_valid_input(player_colour)
     end
-    start_square = move_input[0..1]
-    end_square = move_input[3..4]
-    make_move(start_square, end_square)
+    unless move_input == "castled"
+      start_square = move_input[0..1]
+      end_square = move_input[3..4]
+      make_move(start_square, end_square)
+    end
     @turns += 1
   end
 
@@ -43,6 +45,42 @@ class Chess
     move_input = gets.chomp
     start_square = move_input[0..1]
     end_square = move_input[3..4]
+
+    # manually check for castles
+    if move_input == "e1 g1" and @board.grid[0][4].is_a?(King) and @board.grid[0][4].colour == "white" and @board.grid[0][5].nil? and @board.grid[0][6].nil? and @board.grid[0][7].is_a?(Rook) and @board.grid[0][7].colour == "white"
+      @board.grid[0][6] = King.new("white")
+      @board.grid[0][5] = Rook.new("white")
+      @board.grid[0][4] = nil
+      @board.grid[0][7] = nil
+      return "castled"
+    end
+
+    if move_input == "e1 c1" and @board.grid[0][4].is_a?(King) and @board.grid[0][4].colour == "white" and @board.grid[0][3].nil? and @board.grid[0][2].nil? and @board.grid[0][1].nil? and @board.grid[0][0].is_a?(Rook) and @board.grid[0][0].colour == "white"
+      @board.grid[0][2] = King.new("white")
+      @board.grid[0][3] = Rook.new("white")
+      @board.grid[0][0] = nil
+      @board.grid[0][1] = nil
+      @board.grid[0][4] = nil
+      return "castled"
+    end
+
+    if move_input == "e8 g8" and @board.grid[7][4].is_a?(King) and @board.grid[7][4].colour == "black" and @board.grid[7][5].nil? and @board.grid[7][6].nil? and @board.grid[7][7].is_a?(Rook) and @board.grid[7][7].colour == "black"
+      @board.grid[7][6] = King.new("black")
+      @board.grid[7][5] = Rook.new("black")
+      @board.grid[7][4] = nil
+      @board.grid[7][7] = nil
+      return "castled"
+    end
+
+    if move_input == "e8 c8" and @board.grid[7][4].is_a?(King) and @board.grid[7][4].colour == "black" and @board.grid[7][3].nil? and @board.grid[7][2].nil? and @board.grid[7][1].nil? and @board.grid[7][0].is_a?(Rook) and @board.grid[7][0].colour == "black"
+      @board.grid[7][2] = King.new("black")
+      @board.grid[7][3] = Rook.new("black")
+      @board.grid[7][0] = nil
+      @board.grid[7][1] = nil
+      @board.grid[7][4] = nil
+      return "castled"
+    end
+
     if not is_valid?(move_input)
       puts("Invalid entry format")
       return false
