@@ -1,9 +1,9 @@
 class Chess
-  def initialize
-    @board = Board.new
+  def initialize(empty = false)
+    @board = Board.new(empty)
     @turns = 0
 
-    play
+    #play
   end
 
   def play
@@ -13,6 +13,19 @@ class Chess
   end
 
   attr_accessor :board
+
+  def check?(colour)
+    @board.grid.each_with_index do |row_list, row|
+      row_list.each_with_index do |square, col|
+        unless square.nil?
+          square.valid_moves([row, col], @board).each do |move_square|
+            return true if @board.grid[move_square[0]][move_square[1]].is_a?(King) and @board.grid[move_square[0]][move_square[1]].colour == colour
+          end
+        end
+      end
+    end
+    return false
+  end
 
   def print_board
     @board.grid.reverse.each do |row|

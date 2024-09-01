@@ -72,11 +72,13 @@ RSpec.describe Chess do
       expect(move).to be_falsey
     end
 
-    xit 'detects check conditions' do
+    it 'detects check conditions' do
+      empty_game = Chess.new(true)
+      empty_board = empty_game.board
       # Set up a board where one player is in check
-      board.place_piece(King.new(:black), [0, 4]) # Black king on e1
-      board.place_piece(Rook.new(:white), [0, 7]) # White rook on h1
-      expect(game.check?(:black)).to be_truthy
+      empty_board.place_piece(King.new("black"), [0, 4]) # Black king on e1
+      empty_board.place_piece(Rook.new("white"), [0, 7]) # White rook on h1
+      expect(empty_game.check?("black")).to be_truthy
     end
 
     xit 'detects checkmate conditions' do
