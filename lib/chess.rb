@@ -62,6 +62,14 @@ class Chess
     end
   end
 
+  def stalemate?(colour)
+    if not(check?(colour)) and not any_moves?(colour)
+      return true
+    else
+      return false
+    end
+  end
+
   def valid_moves(row, col)
     return @board.grid[row][col].valid_moves([row,col], @board).select{|move| not(makes_check?([row,col], move))}
   end

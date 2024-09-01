@@ -91,12 +91,14 @@ RSpec.describe Chess do
       expect(empty_game.checkmate?("black")).to be_truthy
     end
 
-    xit 'detects stalemate conditions' do
+    it 'detects stalemate conditions' do
+      empty_game = Chess.new(true)
+      empty_board = empty_game.board
       # Set up a stalemate scenario
-      board.place_piece(King.new(:black), [7, 7]) # Black king on h8
-      board.place_piece(King.new(:white), [5, 6]) # White king on g7
-      board.place_piece(Queen.new(:white), [6, 7]) # White queen on h7
-      expect(game.stalemate?(:black)).to be_truthy
+      empty_board.place_piece(King.new("black"), [7, 5]) # Black king on h8
+      empty_board.place_piece(Bishop.new("white"), [6, 5]) # White king on g7
+      empty_board.place_piece(King.new("white"), [5, 5]) # White queen on h7
+      expect(empty_game.stalemate?(:black)).to be_truthy
     end
   end
 
