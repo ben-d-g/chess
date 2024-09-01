@@ -7,6 +7,8 @@ class Knight < Piece
     @moved = false
   end
 
+  attr_accessor :colour
+
   def get_piece
     if @colour == "white"
       return "♘" 

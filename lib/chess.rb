@@ -11,6 +11,18 @@ class Chess
     while true
       print_board
       play_turn
+
+      ["black", "white"].each do |colour|
+        if checkmate?(colour)
+          puts("#{colour} has been checkmated!")
+          return true
+        elsif stalemate?(colour)
+          puts("Stalemate!")
+          return true
+        elsif check?(colour)
+          puts("#{colour} is in check")
+        end
+      end
     end
   end
 
@@ -82,7 +94,6 @@ class Chess
     @board.grid.each_with_index do |row_list, row|
       row_list.each_with_index do |square, col|
         if not(@board.grid[row][col].nil?) and (@board.grid[row][col].colour() == colour) and (valid_moves(row,col) != [])
-          p(@board.grid[row][col].valid_moves([row,col], @board))
           return true
         end
       end
@@ -144,7 +155,7 @@ class Chess
 
     if @board.grid[start_coords[0]][start_coords[1]].valid_move?(start_coords, end_coords, @board) and not(makes_check?(start_coords, end_coords))
       @board.grid[end_coords[0]][end_coords[1]] = @board.at(start_coords)
-      p(end_coords)
+      #p(end_coords)
       @board.grid[start_coords[0]][start_coords[1]] = nil
       true
     else
