@@ -21,9 +21,21 @@ class Chess
       end
 
       print_board
-      play_turn
+      return nil if (play_turn == "saved")
 
       
+    end
+  end
+
+  def save_game
+    File.open("save_game.dat", "wb") do |file|
+      Marshal.dump(@board, file)
+    end
+  end
+
+  def load_game
+    File.open("save_game.dat", "rb") do |file|
+      @board = Marshal.load(file)
     end
   end
 
@@ -33,7 +45,8 @@ class Chess
     until move_input
       move_input = get_valid_input(player_colour)
     end
-    unless move_input == "castled"
+    return "saved" if move_input == "saved"
+    unless (move_input == "castled" or move_input == "loaded")
       start_square = move_input[0..1]
       end_square = move_input[3..4]
       make_move(start_square, end_square)
@@ -46,6 +59,16 @@ class Chess
     move_input = gets.chomp
     start_square = move_input[0..1]
     end_square = move_input[3..4]
+
+    if move_input == "save"
+      save_game
+      return "saved"
+    end
+
+    if move_input == "load"
+      load_game
+      return "loaded"
+    end
 
     # manually check for castles
     if move_input == "e1 g1" and @board.grid[0][4].is_a?(King) and @board.grid[0][4].colour == "white" and @board.grid[0][5].nil? and @board.grid[0][6].nil? and @board.grid[0][7].is_a?(Rook) and @board.grid[0][7].colour == "white"
