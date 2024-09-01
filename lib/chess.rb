@@ -9,11 +9,7 @@ class Chess
   def play
     
     while true
-      print_board
-      play_turn
-
-      colour = (@turns % 2 == 1) ? "white" : "black"
-
+      colour = (@turns % 2 == 0) ? "white" : "black"
       if checkmate?(colour)
         puts("#{colour} has been checkmated!")
         return true
@@ -23,6 +19,11 @@ class Chess
       elsif check?(colour)
         puts("#{colour} is in check")
       end
+
+      print_board
+      play_turn
+
+      
     end
   end
 
@@ -195,6 +196,11 @@ class Chess
       @board.grid[end_coords[0]][end_coords[1]] = @board.at(start_coords)
       #p(end_coords)
       @board.grid[start_coords[0]][start_coords[1]] = nil
+      if @board.grid[end_coords[0]][end_coords[1]].colour == "white" and @board.grid[end_coords[0]][end_coords[1]].is_a?(Pawn) and end_coords[0] == 7
+        @board.grid[end_coords[0]][end_coords[1]] = Queen.new("white")
+      elsif @board.grid[end_coords[0]][end_coords[1]].colour == "black" and @board.grid[end_coords[0]][end_coords[1]].is_a?(Pawn) and end_coords[0] == 0
+        @board.grid[end_coords[0]][end_coords[1]] = Queen.new("black")
+      end
       true
     else
       false
