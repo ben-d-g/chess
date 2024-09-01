@@ -3,7 +3,12 @@ require_relative("piece")
 class Pawn < Piece
   def initialize(colour)
     @colour = colour
-    @moves = {once: [[1, 0], [2, 0]], repeats: []}
+    @moves = {}
+    if @colour == "white"
+      @moves = {once: [[1, 0], [2, 0]], repeats: []}
+    else
+      @moves = {once: [[-1, 0], [-2, 0]], repeats: []}
+    end
     @moved = false
   end
 
@@ -19,9 +24,17 @@ class Pawn < Piece
 
   def update_moves
     if !moved
-      @moves[:once] = [[1, 0], [2, 0]]
+      if @colour == "white"
+        @moves = {once: [[1, 0], [2, 0]], repeats: []}
+      else
+        @moves = {once: [[-1, 0], [-2, 0]], repeats: []}
+      end
     else
-      @moves[:once] = [[1, 0]]
+      if @colour == "white"
+        @moves = {once: [[1, 0]], repeats: []}
+      else
+        @moves = {once: [[-1, 0]], repeats: []}
+      end
     end
   end
 

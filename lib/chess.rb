@@ -3,13 +3,49 @@ class Chess
     @board = Board.new(empty)
     @turns = 0
 
-    #play
+    play
   end
 
   def play
-    print_board
-    make_move("e2","e4")
-    print_board
+    
+    while true
+      print_board
+      play_turn
+    end
+  end
+
+  def play_turn
+    player_colour = (@turns % 2 == 0) ? "white" : "black"
+    move_input = get_valid_input(player_colour)
+    until move_input
+      move_input = get_valid_input(player_colour)
+    end
+    start_square = move_input[0..1]
+    end_square = move_input[3..4]
+    make_move(start_square, end_square)
+    @turns += 1
+  end
+
+  def get_valid_input(player_colour)
+    puts("Input #{player_colour}'s move")
+    move_input = gets.chomp
+    start_square = move_input[0..1]
+    end_square = move_input[3..4]
+    if not is_valid?(move_input)
+      puts("Invalid entry format")
+      return false
+    elsif @board.grid[algebraic_translator(start_square)[0]][algebraic_translator(start_square)[1]].nil? or @board.grid[algebraic_translator(start_square)[0]][algebraic_translator(start_square)[1]].colour != player_colour
+      puts("That is not your piece to move")
+      return false
+    elsif not valid_move?(start_square, end_square)
+      puts("That is not a valid move")
+      return false
+    end
+    return move_input
+  end
+
+  def is_valid?(input)
+    return (input.length == 5 and "abcdefgh".include?(input[0]) and "12345678".include?(input[1]) and input[2] == " " and "abcdefgh".include?(input[3]) and "12345678".include?(input[4]))
   end
 
   attr_accessor :board
@@ -72,6 +108,13 @@ class Chess
 
   def valid_moves(row, col)
     return @board.grid[row][col].valid_moves([row,col], @board).select{|move| not(makes_check?([row,col], move))}
+  end
+
+  def valid_move?(start_square, end_square)
+    start_coords = algebraic_translator(start_square)
+    end_coords = algebraic_translator(end_square)
+
+    return valid_moves(start_coords[0], start_coords[1]).include?(end_coords)
   end
 
   def print_board
